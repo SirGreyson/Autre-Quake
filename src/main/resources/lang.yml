@@ -1,0 +1,240 @@
+### Plugin Message/Text Configuration ###
+
+## Configuration for Messages sent by the plugin ##
+## Use ChatColor codes in addition to an '&' sign for formatting ##
+messages:
+
+  # Prefix added to all private Messages sent by the plugin #
+  PREFIX: '&7[&5Quake&7]&r'
+  
+  # Message sent when a player uses an invalid Lobby ID in a command #
+  INVALID_LOBBY_ID: '&cThere is no Lobby with that ID!'
+  # Message sent when an admin tries to create a Lobby with an already used ID #
+  LOBBY_ID_USED: '&cThere is already a Lobby with that ID!'
+  # Message sent when an admin creates a new Lobby #
+  # You can use the following formatting codes: #
+  # %lobby% = The ID  of the newly created Lobby #
+  LOBBY_CREATED: '&aSuccessfully created Lobby with ID &b%lobby%'
+  # Message sent when an admin removes an existing Lobby #
+  # You can use the following formatting codes: #
+  # %lobby% = The ID  of the newly created Lobby #
+  LOBBY_REMOVED: '&aSuccessfully removed Lobby with ID &b%lobby%'
+  # Message sent when an admin adds a new Lobby sign #
+  # You can use the following formatting codes: #
+  # %lobby% = The ID  of the Lobby linked to the sign #
+  LOBBY_SIGN_ADDED: '&aAdded new sign to Lobby &b%lobby%'
+  # Message sent when an admin removes an existing Lobby sign #
+  LOBBY_SIGN_REMOVED: '&aLobby sign successfully removed!'
+  
+  # Message sent when a player runs a command requiring a Lobby, but isn't in one #
+  NOT_IN_LOBBY: '&cYou are not currently in a Lobby!'
+  # Message sent when a player tries to join a Lobby while already in another Lobby #
+  ALREADY_IN_LOBBY: '&cYou are already in a Lobby! Type &6/lobby leave &cto leave!'
+  # Message sent when a player leaves a Lobby #
+  LOBBY_LEFT: '&aYou have left your current Lobby!'
+  # Message sent when a player tries to join a FULL Lobby #
+  LOBBY_FULL: '&cSorry, this Lobby is already full!'
+  # Message sent when a player tries to join a RUNNING Lobby #
+  LOBBY_RUNNING: '&cSorry, this Lobby is already in progress!'
+  # Message sent when a player tries to join a broken (ERROR) Lobby #
+  LOBBY_ERROR: '&cSorry, something is wrong with this Lobby. Try again later...'
+  
+  # Message sent when a player uses an invalid Arena ID in a command #
+  INVALID_ARENA_ID: '&cThere is no Arena with that ID!'
+  # Message sent when an admin tries to create an Arena with an already used ID #
+  ARENA_ID_USED: '&cThere is already an Arena with that ID!'
+  # Message sent when an admin creates a new Arena #
+  # You can use the following formatting codes: #
+  # %arena% = The ID  of the newly created Arena #
+  ARENA_CREATED: '&aSuccessfully created Arena with ID &b%arena%'
+  # Message sent when an admin removes an existing Arena #
+  # You can use the following formatting codes: #
+  # %arena% = The ID  of the removed Arena #
+  ARENA_REMOVED: '&aSuccessfully removed Arena with ID &b%arena%'
+  # Message sent when an admin sets an Arena's main spawn #
+  ARENA_SPAWN_SET: '&aSuccessfully set Arena spawn to your location'
+  # Message sent when an admin adds a new Arena spawn point #
+  ARENA_SPAWN_ADDED: '&aSuccessfully added spawn point at your location'
+
+## Configuration for Broadcast Messages sent by the plugin ##
+## Use ChatColor codes in addition to an '&' sign for formatting ##
+broadcasts:
+
+  # Prefix added to all public messages sent by the plugin #
+  BROADCAST_PREFIX: '&l&7[&5Quake&l&7]&r'  
+  
+  # Broadcast message sent when a Lobby loses the minimum number of players to start #
+  # You can use the following formatting codes: #
+  # %playersNeeded% = Number of players needed to reach the minimum player count #
+  # %playerCount% = The current amount of players in the Lobby %
+  # %maxPlayers% = The maximum amount of players the Arena can hold %
+  LOBBY_CANT_START: '&aSorry, there are no longer enough players to start the game! Need &c%playersNeeded% &amore players!'
+  # Broadcast message sent when a Lobby is won or finished #
+  # You can use the following formatting codes: #
+  # %winner% = The victor/winner of the game #
+  # %line% = a new line in the message #
+  LOBBY_FINISHED: '&0#---# %line%&7%winner% &aa gagné avec le Railgun Basique! %line%&0#---#' 
+  # Broadcast message sent when a Lobby is set the ENDING phase #
+  # You can use the following formatting codes: #
+  # %time% = Time until Lobby is completely reset #
+  LOBBY_ENDING: '&6Teleporting to Spawn in %time% seconds...'
+  # Broadcast message sent when a Lobby ends due to players not killing each other #
+  # This message will be sent and the Lobby reset if there are no kills in config.KILL_CHECK_COUNTDOWN seconds #
+  LOBBY_FORCE_ENDING: '&cLobby force-ending due to no recent player kills!'
+  
+  # Broadcast message sent when player joins a Lobby #
+  # You can use the following formatting codes: #
+  # %player% = The Minecraft name of the joining player #
+  # %playersNeeded% = Number of players needed to reach the minimum player count #
+  # %playerCount% = The current amount of players in the Lobby %
+  # %maxPlayers% = The maximum amount of players the Arena can hold %
+  PLAYER_JOINED_LOBBY: '&7%player% &6a rejoint la partie! On est maintenant &c%playerCount%&3/&c%maxPlayers%&6!'
+  # Broadcast message sent when player leaves a Lobby #
+  # You can use the following formatting codes: #
+  # %player% = The Minecraft name of the joining player #
+  # %playerCount% = The current amount of players in the Lobby %
+  # %maxPlayers% = The maximum amount of players the Arena can hold %
+  PLAYER_LEFT_LOBBY: '&7%player% &6has left the Lobby!'
+  # Broadcast message sent when a Player is killed by another Player in a Lobby #
+  # You can use the following formatting codes: #
+  # %player% = The Minecraft name of the killed player #
+  # %killer% = The Minecraft name of the killing player #
+  PLAYER_KILLED: '&7%killer% &3a touché &7%player%'
+  
+## Configuration for Lobby Sign text ## 
+## Use ChatColor codes in addition to an '&' sign for formatting ##
+signs:
+  # Sign Format during the WAITING or OPEN phase of a Lobby #
+  # You can use the following formatting codes: #
+  # %lobby% = The ID of the Lobby #
+  # %arena% = The display name of the active Arena #
+  # %playerCount% = The current amount of players in the Lobby %
+  # %maxPlayers% = The maximum amount of players the Arena can hold %
+  WAITING:
+    0: '&a[Rejoindre]'
+    1: '%lobby%'
+    2: '&f%arena%'
+    3: '&5%playerCount%&a/&5%maxPlayers%'
+  # Sign Format during the STARTING phase of a Lobby #
+  # You can use the following formatting codes: #
+  # %time% = The time left before the game starts #
+  # %lobby% = The ID of the Lobby #
+  # %arena% = The display name of the active Arena #
+  # %playerCount% = The current amount of players in the Lobby %
+  # %maxPlayers% = The maximum amount of players the Arena can hold %
+  STARTING:
+    0: '&2[%time% secs]'
+    1: '%lobby%'
+    2: '&f%arena%'
+    3: '&5%playerCount%&a/&5%maxPlayers%'
+  # Sign Format during the FORCE_STARTING phase of a Lobby #
+  # You can use the following formatting codes: #
+  # %time% = The time left before the game starts #
+  # %lobby% = The ID of the Lobby #
+  # %arena% = The display name of the active Arena #
+  # %playerCount% = The current amount of players in the Lobby %
+  # %maxPlayers% = The maximum amount of players the Arena can hold %
+  FORCE_STARTING:
+    0: '&2[%time% secs]'
+    1: '%lobby%'
+    2: '&f%arena%'
+    3: '&5%playerCount%&a/&5%maxPlayers%'
+  # Sign Format during the RUNNING phase of a Lobby #
+  # You can use the following formatting codes: #
+  # %lobby% = The ID of the Lobby #
+  # %arena% = The display name of the active Arena #
+  # %playerCount% = The current amount of players in the Lobby %
+  # %maxPlayers% = The maximum amount of players the Arena can hold %
+  RUNNING:
+    0: '&4[Complet]'
+    1: '%lobby%'
+    2: '&f%arena%'
+    3: '&5%playerCount%&a/&5%maxPlayers%'
+  # Sign Format during the ENDING/RESETTING phase of a Lobby #
+  # You can use the following formatting codes: #
+  # %winner% = The victor/winner of the game #
+  # %lobby% = The ID of the Lobby #
+  # %arena% = The display name of the active Arena #
+  # %playerCount% = The current amount of players in the Lobby %
+  # %maxPlayers% = The maximum amount of players the Arena can hold %
+  ENDING:
+    0: '&5[Terminée]'
+    1: '&9Gagnant:'
+    2: '%winner%'
+    3: '&f%arena%'
+  # Sign Format for a broken or erroneous Lobby #
+  # If a Sign has this formatting, either it has no Arena to run #
+  # or there's something wrong with the current Arena #
+  ERROR:
+    0: '&7[&4Error&7]'
+    1: '&4\/'
+    2: '&4/\'
+    3: '&7[&4Error&7]'
+    
+## Configuration for countdown broadcasts ##
+## Use ChatColor codes in addition to an '&' sign for formatting ##
+countdown:
+  # The number on the left is the number of seconds left in the countdown #
+  # If you want to add a message at 'x' seconds, just add the number and message #
+  # You can use the following formatting codes: #
+  # %time% = The amount of time (in seconds) left in the countdown #
+  60: '&6La partie commencera dans %time% secondes!'
+  30: '&6La partie commencera dans %time% secondes!'
+  20: '&6La partie commencera dans %time% secondes!'
+  10: '&6La partie commencera dans %time% secondes!'
+  5: '&6La partie commencera dans %time% secondes!'
+  4: '&6%time% secondes!'
+  3: '&6%time% secondes!'
+  2: '&6%time% secondes!'
+  1: '&6%time% secondes!'
+  0: '&6La partie a commencé ! Clique-droit avec ta houe pour tuer les adversaires!'
+  
+## Configuration for kill count broadcasts ##
+## Use ChatColor codes in addition to an '&' sign for formatting ##
+killCounts:
+  # The number on the left is the number of total kills #
+  # If you want to add a message at 'x' kills, just add the number and message #
+  # You can use the following formatting codes: #
+  # %player% = The Minecraft name of the killing player #
+  26: '&dParce que 25 Kills, c’est pas assez pour toi, &7%player%&d?'
+  27: '&dEt tu vas me dire que c’est ton premier Triple Kill, &7%player%&d?'
+  28: '&dUn Quadruple Kill… C’est beau, ça, &7%player%&d!'
+  29: '&dMAIS ARRÊTE!!! Mais… Dis-moi… L’allure de « &3Quintuple Kill! &d» gère un peu, non, &7%player%&d?'
+  30: '&7%player%&d, Je déclare officiellement que tu as réussi ta vie ! Alors je te fais le plus gros GG!'
+  
+## Configuration for killstreak broadcasts ##
+## Use ChatColor codes in addition to an '&' sign for formatting ##
+killstreaks:
+  # The number on the left is the number of kills in a row #
+  # If you want to add a message at 'x' kills, just add the number and message #
+  # You can use the following formatting codes: #
+  # %player% = The Minecraft name of the player on a streak #
+  5: '&7%player% &5a arrêté de dormir!'
+  10: '&7%player% &5enchaîne les Kills!'
+  15: '&7%player% &5est carrément entrain de tracer!'
+  20: '&7%player% &5est invincible! Mais… Arrêtez-le, non d’une pipe!!!'
+  25: '&7%player% &5est parfait! Juste… Parfait.'
+  26: '&5Ok… Parce que 25 à la suite, c’est pas assez pour toi, &7%player%&5???'
+  27: '&5Wowowow. Du calme, &7%player%&5!!!'
+  28: '&5Dis voir… Pourquoi tu continues de jouer, &7%player%&5?'
+  29: '&5Pourquoi est-ce que MOI je n’ai JAMAIS obtenu AUTANT, HEIN, &7%player%&5???'
+  30: '&5Tu veux que je te dise QUOI? Je… Je ne peux plus RIEN dire, maintenant! T’es content, hein? Bravo! Tu as réduit le jeu en cendres! Tu es content, &7%player%&5???'
+  
+## Configuration for Freestyle Kill messages ##
+## Use ChatColor codes in addition to an '&' sign for formatting ##
+freeStyleKills:
+  # The number on the left is the number of players killed #
+  # If you want to add a message at 'x' kills, just add the number and message #
+  # You can use the following formatting codes: #
+  # %player% = The Minecraft name of the player on a streak #
+  2: '&3Double Kill!'
+  3: '&3Triple Kill!'
+  4: '&3Quadruple Kill!'
+  5: '&3Quintuple Kill!'
+  6: '&3Sextuple Kill! (6)'
+  7: '&3Septuple Kill! (7)'
+  8: '&3Octuple Kill! (8)'
+  9: '&3Nonuple Kill! (9)'
+  10: '&3Décuple Kill! (10)'
+  11: '&3Undécuple Kill! (11)'
+  12: '&3Duodécuple Kill! (12)'

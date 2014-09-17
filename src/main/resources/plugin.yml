@@ -1,0 +1,8 @@
+name: AutreQuake
+version: 1.0
+description: AutreQuake plugin for Autre-Monde Network
+author: SirReason
+
+main: eu.autremonde.quake.AutreQuake
+#TODO: Add Multiverse dependency
+depend: [ProtocolLib, WorldEdit]

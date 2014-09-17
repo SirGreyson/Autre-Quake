@@ -1,0 +1,20 @@
+### Arena Configuration File ###
+### NOTICE: All comments will be deleted after the first save ###
+
+## Individual ID of the Arena ## 
+arena1:
+  # Display name of the Arena #
+  # Use '&' + a color code to color and '_' for spacing #
+  displayName: '&cTest_Arena'
+  # Location of the main spawn point #
+  mainSpawn: world,-121,78,227
+  # Maximum amount of players this Arena can have at once #
+  maxPlayers: 10
+  # Minimum amount of players needed to start a match in this Arena #
+  minPlayers: 5
+  # List of Arena spawn positions for use during a match #
+  spawnLocations:
+  - world,-129,78,235
+  - world,-129,78,219
+  - world,-113,78,219
+  - world,-113,78,235

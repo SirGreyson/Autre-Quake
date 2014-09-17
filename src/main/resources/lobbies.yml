@@ -1,0 +1,7 @@
+### Arena Configuration File ###
+### Nothing really to see here. All Lobby signs will be stored here automatically ###
+
+## Individual ID of the Lobby ##
+1-1:
+  # List of Lobby signs for this Lobby #
+  lobbySigns: []

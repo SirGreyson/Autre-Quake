@@ -1,0 +1,32 @@
+### Basic Plugin Configuration ###
+
+## Name of the spawn world. Players will be teleported ##
+## to this world's spawn when they leave a Lobby ##
+SPAWN_WORLD: 'world'
+## Number of points needed by one Player to win the game ##
+POINTS_TO_WIN: 30
+
+### Match Timing Configuration ###
+
+## Time (in seconds) before the game starts after the ##
+## minimum number of players is reached in a Lobby ##
+MIN_PLAYER_COUNTDOWN: 60
+## Time (in seconds) before the game starts after the ##
+## maximum number of players is reached in a Lobby ##
+MAX_PLAYER_COUNTDOWN: 30
+## Time (in seconds) in which a kill must be made or ##
+## else the current game will end without a winner ##
+KILL_CHECK_COUNTDOWN: 180
+## Time (in seconds) after the game has ended before ## 
+## all players are teleported to Spawn and the Arena reset ##
+END_GAME_COUNTDOWN: 15
+## Time (in seconds) before a dead player is forced to respawn ##
+## If you would like to disable this feature, put -1 ##
+FORCE_RESPAWN_DELAY: 3
+
+### Default Value Configuration ### 
+
+## Default MIN player count for an Arena ##
+DEFAULT_MIN_PLAYERS: 5
+## Default MAX player count for an Arena ## 
+DEFAULT_MAX_PLAYERS: 10

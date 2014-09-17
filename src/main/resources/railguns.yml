@@ -1,0 +1,34 @@
+### Plugin Railgun Configuration ###
+## NOTICE: You cannot currently add new Railguns to this config ##
+
+## Default Railgun Configuration ##
+default:
+  ## Material used for the Railgun item (IE. IRON_HOE) ##
+  ## Click for a full list of available Materials (http://jd.bukkit.org/dev/apidocs/org/bukkit/Material.html) ##
+  MATERIAL: 'IRON_HOE'
+  ## Display name of the Railgun item ## 
+  ## Use ChatColor codes in addition to an '&' sign for formatting ##
+  DISPLAY_NAME: '&2Basic Railgun'
+  ## OPTIONAL lore of the Railgun item ## 
+  ## If you do not wish to include lore, change this line to 'ITEM_LORE: []' ##
+  ITEM_LORE:
+  - '&aRight click with this item in-hand to shoot'
+  - '&aThere is a cooldown in between shots'
+  ## OPTIONAL enchantment that can be added to the Railgun item ##
+  ## Enchantment Syntax: 'ENCHANTMENT:LEVEL' or 'none' for no Enchant ##
+  ## Click for a full list of available Enchants (http://jd.bukkit.org/rb/apidocs/org/bukkit/enchantments/Enchantment.html) ##
+  ENCHANTMENT: 'none'
+  ## OPTIONAL firing sound played when a player fires this Railgun ##
+  ## Sound Syntax: 'SOUND:VOLUME:PITCH' or 'none' for no custom sound ##
+  ## Click for a full list of available Sounds (http://jd.bukkit.org/rb/apidocs/org/bukkit/World.html) ##
+  SHOT_SOUND: 'BLAZE_HIT:1:2'
+  ## OPTIONAL sound played when a player fires this Railgun and hits another player ##
+  ## Sound Syntax: 'SOUND:VOLUME:PITCH' or 'none' for no custom sound ##
+  ## Click for a full list of available Sounds (http://jd.bukkit.org/rb/apidocs/org/bukkit/World.html) ##
+  HIT_SOUND: 'BLAZE_DEATH:1:2'
+  ## Color of the Firework that explodes when a player or block is hit (or use RANDOM for a randomized color) ##
+  ## Click for a full list of available Colors (http://jd.bukkit.org/rb/apidocs/org/bukkit/Color.html) ##
+  FIREWORK_COLOR: 'RANDOM'
+  ## Type of the Firework that explodes when a player or block is hit ##
+  ## Click for a full list of available Types (http://jd.bukkit.org/rb/apidocs/org/bukkit/FireworkEffect.Type.html) ##
+  FIREWORK_TYPE: 'BALL_LARGE'
