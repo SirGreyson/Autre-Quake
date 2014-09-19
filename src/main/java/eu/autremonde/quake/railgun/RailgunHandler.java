@@ -54,6 +54,8 @@ public class RailgunHandler {
         Lobby lobby = LobbyHandler.getLobbyFromPlayer(killed);
         if(lobby == null || lobby.getStage() != Stage.RUNNING) return;
         killed.setHealth(0);
+        if(lobby.getMatch().getKillStreak(killed) >= 5)
+            Messaging.broadcast(lobby, Lang.Broadcasts.PLAYER_SHOTDOWN.toString().replace("%player%", killed.getName()).replace("%killer%", killer.getName()));
         lobby.getMatch().resetKillStreak(killed);
         Messaging.broadcast(lobby, Lang.Broadcasts.PLAYER_KILLED.toString().replace("%player%", killed.getName()).replace("%killer%", killer.getName()));
         lobby.getMatch().addKill(killer);

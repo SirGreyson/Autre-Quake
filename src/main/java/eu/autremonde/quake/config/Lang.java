@@ -59,7 +59,8 @@ public class Lang {
 
         PLAYER_JOINED_LOBBY,
         PLAYER_LEFT_LOBBY,
-        PLAYER_KILLED;
+        PLAYER_KILLED,
+        PLAYER_SHOTDOWN;
 
         public String toString() {
             return c.getString("broadcasts." + this.name());

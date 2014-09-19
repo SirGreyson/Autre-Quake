@@ -100,6 +100,11 @@ broadcasts:
   # %player% = The Minecraft name of the killed player #
   # %killer% = The Minecraft name of the killing player #
   PLAYER_KILLED: '&7%killer% &3a touché &7%player%'
+  # Broadcast message sent when a Player on a killstreak greater than 5 is killed #
+  # You can use the following formatting codes: #
+  # %player% = The Minecraft name of the killed player #
+  # %killer% = The Minecraft name of the killing player #
+  PLAYER_SHOTDOWN: '&7%player% &bgot shot down by &7%killer%'
   
 ## Configuration for Lobby Sign text ## 
 ## Use ChatColor codes in addition to an '&' sign for formatting ##
