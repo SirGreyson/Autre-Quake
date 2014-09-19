@@ -6,3 +6,4 @@ author: SirReason
 main: eu.autremonde.quake.AutreQuake
 #TODO: Add Multiverse dependency
 depend: [ProtocolLib, WorldEdit]
+softdepend: [Multiverse]

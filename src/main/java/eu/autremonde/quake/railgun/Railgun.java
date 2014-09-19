@@ -63,8 +63,8 @@ public class Railgun {
     }
 
     public void shoot(Player shooter) {
-        playSound(shotSound, shooter.getLocation());
         doCooldown(shooter);
+        playSound(shotSound, shooter.getLocation());
         List<UUID> hitPlayers = new ArrayList<UUID>();
         List<Block> lineOfSight = shooter.getLineOfSight(null, 50);
         for (Block block : lineOfSight) {
@@ -72,7 +72,7 @@ public class Railgun {
             Firework trail = block.getWorld().spawn(block.getLocation(), Firework.class);
             Player player = getNearestPlayer(trail);
             trail.remove();
-            if (player != null && player != shooter && !hitPlayers.contains(player.getUniqueId())) {
+            if (player != null && !player.isDead() && player != shooter && !hitPlayers.contains(player.getUniqueId())) {
                 hitPlayers.add(player.getUniqueId());
                 playSound(hitSound, player.getLocation());
                 doHit(player.getLocation());
@@ -101,13 +101,14 @@ public class Railgun {
 
     private void doCooldown(final Player player) {
         player.giveExp(16);
+        if(taskMap.containsKey(player.getUniqueId())) taskMap.get(player.getUniqueId()).cancel();
         taskMap.put(player.getUniqueId(), Bukkit.getScheduler().runTaskTimer(AutreQuake.getPlugin(), new Runnable() {
             @Override
                 public void run() {
-                if(player == null || player.getTotalExperience() <= 0) taskMap.get(player.getUniqueId()).cancel();
-                else player.giveExp(-4);
+                if(player == null || player.isDead() || player.getTotalExperience() <= 0) taskMap.get(player.getUniqueId()).cancel();
+                else player.giveExp(-1);
             }
-        }, 0, 10));
+        }, 0, 2));
     }
 
     public static Railgun deserialize(ConfigurationSection c) {

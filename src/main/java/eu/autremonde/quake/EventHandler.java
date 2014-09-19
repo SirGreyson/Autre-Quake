@@ -81,10 +81,17 @@ public class EventHandler implements Listener {
         Lobby lobby = LobbyHandler.getLobbyFromPlayer(e.getPlayer());
         if(lobby == null) e.setRespawnLocation(Bukkit.getWorld(Settings.SPAWN_WORLD.asString()).getSpawnLocation());
         else {
+            final Player player = e.getPlayer();
             e.setRespawnLocation(lobby.getActiveArena().getNextSpawnLoc());
             if(lobby.getStage() != Stage.RUNNING) return;
-            RailgunHandler.getRailgun("DEFAULT").giveRailGun(e.getPlayer());
-            e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false));
+            RailgunHandler.getRailgun("DEFAULT").giveRailGun(player);
+            Bukkit.getScheduler().runTaskLater(AutreQuake.getPlugin(), new Runnable() {
+                @Override
+                public void run() {
+                    if(player == null || !player.isOnline() || player.isDead()) return;
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false));
+                }
+            }, 10);
         }
     }
 
