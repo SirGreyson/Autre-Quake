@@ -27,10 +27,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -63,7 +60,8 @@ public class EventHandler implements Listener {
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
-        e.getDrops().clear();
+        e.getEntity().getInventory().clear();
+        e.getEntity().getInventory().setArmorContents(null);
         e.setDeathMessage(null);
         if(Settings.FORCE_RESPAWN_DELAY.asInt() < 0) return;
         final Player player = e.getEntity();
@@ -89,7 +87,7 @@ public class EventHandler implements Listener {
                 @Override
                 public void run() {
                     if(player == null || !player.isOnline() || player.isDead()) return;
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true));
                 }
             }, 10);
         }
@@ -136,6 +134,14 @@ public class EventHandler implements Listener {
                 Messaging.send(e.getPlayer(), Lang.Messages.LOBBY_SIGN_REMOVED.toString().replace("%lobby%", lobby.getLobbyID()));
             }
         }
+    }
+
+    @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)
+    public void onWorldChange(PlayerChangedWorldEvent e) {
+        Lobby lobby = LobbyHandler.getLobbyFromPlayer(e.getPlayer());
+        if(lobby != null && lobby.getActiveArena() != null)
+            if(e.getFrom().getName().equalsIgnoreCase(lobby.getActiveArena().getMainSpawn().getWorld().getName()))
+                lobby.removePlayer(e.getPlayer());
     }
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)

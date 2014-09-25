@@ -5,6 +5,8 @@
 SPAWN_WORLD: 'world'
 ## Number of points needed by one Player to win the game ##
 POINTS_TO_WIN: 30
+## Number of coins given to the Player who wins the game ##
+WINNER_COINS: 10
 
 ### Match Timing Configuration ###
 

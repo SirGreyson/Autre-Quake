@@ -35,6 +35,7 @@ public class Lang {
         LOBBY_FULL,
         LOBBY_RUNNING,
         LOBBY_ERROR,
+        LOBBY_WON,
 
         INVALID_ARENA_ID,
         ARENA_ID_USED,
@@ -126,6 +127,7 @@ public class Lang {
 
         public static int getCoins(int streak) {
             if(streak == 5 || streak == 10 || streak == 15 || streak == 20) return streak / 5;
+            else if(streak == 25) return 5;
             else if(streak == 26) return 7;
             else if(streak == 27) return 9;
             else if(streak == 28) return 11;

@@ -10,6 +10,13 @@ import eu.autremonde.quake.AutreQuake;
 import eu.autremonde.quake.config.Lang;
 import eu.autremonde.quake.config.Settings;
 import eu.autremonde.quake.util.Messaging;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
+import org.bukkit.Location;
+import org.bukkit.entity.Firework;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -63,12 +70,14 @@ public class MatchTimer {
 
         // TASK CONFIGURATION FOR STAGE ENDING
         } else if(currentStage == Stage.ENDING) {
-            this.countdown = Settings.END_GAME_COUNTDOWN.asInt() + 1; //TODO This is doing KILL_CHECK_COUNTDOWN..?
+            this.countdown = Settings.END_GAME_COUNTDOWN.asInt() + 1;
             this.gameTask = new BukkitRunnable() {
                 @Override
                 public void run() {
                     countdown -= 1;
+                    Player winner = Bukkit.getPlayer(match.getWinner());
                     if(countdown <= 0) match.resetGame();
+                    else if(countdown % 5 == 0 && winner != null) launchFirework(winner.getLocation());
                 }
             }.runTaskTimer(plugin, 20, 20);
         }
@@ -97,5 +106,12 @@ public class MatchTimer {
 
     public void setCountdown(int countdown) {
         this.countdown = countdown;
+    }
+
+    private void launchFirework(Location loc) {
+        Firework firework = loc.getWorld().spawn(loc, Firework.class);
+        FireworkMeta meta = firework.getFireworkMeta();
+        meta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.BALL_LARGE).withColor(Color.GREEN).build());
+        firework.setFireworkMeta(meta);
     }
 }

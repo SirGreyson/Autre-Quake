@@ -139,7 +139,7 @@ public class Match {
         setStage(Stage.RUNNING);
         for(Player player : getPlayers()) {
             player.teleport(activeArena.getNextSpawnLoc());
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true));
             RailgunHandler.getRailgun("DEFAULT").giveRailGun(player);
         }
     }
@@ -151,7 +151,11 @@ public class Match {
             PlayerUtil.resetPlayers(PlayerUtil.getPlayers(players), false, false);
             Messaging.broadcastNoPrefix(this, Lang.Broadcasts.LOBBY_FINISHED, Lang.FormatType.PLAYER_LOBBY_EVENT.getVarMap(null, lobby));
             Messaging.broadcast(this, Lang.Broadcasts.LOBBY_ENDING.toString().replace("%time%", String.valueOf(Settings.END_GAME_COUNTDOWN.asInt())));
-            if(!getWinner().equalsIgnoreCase("NONE")) StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addWin();
+            if(!getWinner().equalsIgnoreCase("NONE")) {
+                StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addCoins(Settings.WINNER_COINS.asInt());
+                StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addWin();
+                if(PlayerUtil.getPlayer(getWinner()) != null) Messaging.send(PlayerUtil.getPlayer(getWinner()), Lang.Messages.LOBBY_WON);
+            }
         }
     }
 

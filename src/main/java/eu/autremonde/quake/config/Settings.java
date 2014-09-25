@@ -10,6 +10,7 @@ public enum Settings {
 
     SPAWN_WORLD,
     POINTS_TO_WIN,
+    WINNER_COINS,
 
     MIN_PLAYER_COUNTDOWN,
     MAX_PLAYER_COUNTDOWN,

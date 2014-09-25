@@ -38,6 +38,8 @@ messages:
   LOBBY_RUNNING: '&cSorry, this Lobby is already in progress!'
   # Message sent when a player tries to join a broken (ERROR) Lobby #
   LOBBY_ERROR: '&cSorry, something is wrong with this Lobby. Try again later...'
+  # Message sent when a player wins a Lobby game #
+  LOBBY_WON: '&aYou have been awarded 10 coins for winning!'
   
   # Message sent when a player uses an invalid Arena ID in a command #
   INVALID_ARENA_ID: '&cThere is no Arena with that ID!'

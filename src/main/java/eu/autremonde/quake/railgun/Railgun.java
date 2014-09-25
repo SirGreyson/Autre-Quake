@@ -100,6 +100,7 @@ public class Railgun {
     }
 
     private void doCooldown(final Player player) {
+        player.setTotalExperience(0);
         player.giveExp(16);
         if(taskMap.containsKey(player.getUniqueId())) taskMap.get(player.getUniqueId()).cancel();
         taskMap.put(player.getUniqueId(), Bukkit.getScheduler().runTaskTimer(AutreQuake.getPlugin(), new Runnable() {
