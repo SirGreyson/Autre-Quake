@@ -179,7 +179,7 @@ public class Lang {
                 final Lobby lobby = (Lobby) args[0];
                 return new HashMap<String, String>() {{
                     put("%lobby%", lobby.getLobbyID());
-                    put("%arena%", lobby.getActiveArena() == null ? "NONE" : lobby.getActiveArena().getDisplayName(true));
+                    put("%arena%", lobby.getActiveArena() == null ? "NONE" : lobby.getActiveArena().getSignDisplayName(true));
                     put("%playerCount%", String.valueOf(lobby.getPlayerCount()));
                     put("%maxPlayers%", lobby.getActiveArena() == null ? "0" : String.valueOf(lobby.getActiveArena().getMaxPlayers()));
                     put("%time%", String.valueOf(lobby.getCountdown()));

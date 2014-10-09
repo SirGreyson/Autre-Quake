@@ -62,6 +62,7 @@ public class EventHandler implements Listener {
     public void onPlayerDeath(PlayerDeathEvent e) {
         e.getEntity().getInventory().clear();
         e.getEntity().getInventory().setArmorContents(null);
+        e.setNewTotalExp(0);
         e.setDeathMessage(null);
         if(Settings.FORCE_RESPAWN_DELAY.asInt() < 0) return;
         final Player player = e.getEntity();
@@ -81,12 +82,14 @@ public class EventHandler implements Listener {
         else {
             final Player player = e.getPlayer();
             e.setRespawnLocation(lobby.getActiveArena().getNextSpawnLoc());
+            RailgunHandler.setRespawnTime(player);
             if(lobby.getStage() != Stage.RUNNING) return;
-            RailgunHandler.getRailgun("DEFAULT").giveRailGun(player);
             Bukkit.getScheduler().runTaskLater(AutreQuake.getPlugin(), new Runnable() {
                 @Override
                 public void run() {
                     if(player == null || !player.isOnline() || player.isDead()) return;
+                    PlayerUtil.resetPlayer(player, false, false);
+                    RailgunHandler.getRailgun("DEFAULT").giveRailGun(player);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true));
                 }
             }, 10);
@@ -146,6 +149,11 @@ public class EventHandler implements Listener {
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)
     public void onFoodChange(FoodLevelChangeEvent e) {
+        e.setCancelled(true);
+    }
+
+    @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)
+    public void onItemDrop(PlayerDropItemEvent e) {
         e.setCancelled(true);
     }
 }

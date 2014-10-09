@@ -20,7 +20,9 @@ import java.util.Map;
 public class Arena {
 
     private String arenaID;
-    private String displayName;
+    private String signDisplayName;
+    private String boardDisplayName;
+    private String joinSound;
     private int minPlayers;
     private int maxPlayers;
     private Location mainSpawn;
@@ -31,16 +33,20 @@ public class Arena {
 
     public Arena(String arenaID, String displayName, Location mainSpawn) {
         this.arenaID = arenaID;
-        this.displayName = displayName;
+        this.signDisplayName = displayName;
+        this.boardDisplayName = displayName;
+        this.joinSound = null;
         this.minPlayers = Settings.DEFAULT_MIN_PLAYERS.asInt();
         this.maxPlayers = Settings.DEFAULT_MAX_PLAYERS.asInt();
         this.mainSpawn = mainSpawn;
         this.spawnLocations = new ArrayList<Location>();
     }
 
-    public Arena(String arenaID, String displayName, int minPlayers, int maxPlayers, Location mainSpawn, List<Location> spawnLocations) {
+    public Arena(String arenaID, String signDisplayName, String boardDisplayName, String joinSound, int minPlayers, int maxPlayers, Location mainSpawn, List<Location> spawnLocations) {
         this.arenaID = arenaID;
-        this.displayName = displayName;
+        this.signDisplayName = signDisplayName;
+        this.boardDisplayName = boardDisplayName;
+        this.joinSound = joinSound;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.mainSpawn = mainSpawn;
@@ -51,9 +57,18 @@ public class Arena {
         return arenaID;
     }
 
-    public String getDisplayName(boolean formatted) {
-        if(formatted) return StringUtil.colorize(displayName.replaceAll("_", " "));
-        return displayName;
+    public String getSignDisplayName(boolean formatted) {
+        if(formatted) return StringUtil.colorize(signDisplayName.replaceAll("_", " "));
+        return signDisplayName;
+    }
+
+    public String getBoardDisplayName(boolean formatted) {
+        if(formatted) return StringUtil.colorize(boardDisplayName.replaceAll("_", " "));
+        return boardDisplayName;
+    }
+
+    public String getJoinSound() {
+        return joinSound;
     }
 
     public int getMinPlayers() {
@@ -105,7 +120,9 @@ public class Arena {
 
     public Map<String, Object> serialize() {
         Map<String, Object> output = new HashMap<String, Object>();
-        output.put("displayName", displayName);
+        output.put("signDisplayName", signDisplayName);
+        output.put("boardDisplayName", boardDisplayName);
+        output.put("joinSound", joinSound);
         output.put("minPlayers", minPlayers);
         output.put("maxPlayers", maxPlayers);
         output.put("mainSpawn", StringUtil.parseLoc(mainSpawn));
@@ -114,7 +131,7 @@ public class Arena {
     }
 
     public static Arena deserialize(ConfigurationSection c) {
-        return new Arena(c.getName(), c.getString("displayName"), c.getInt("minPlayers"), c.getInt("maxPlayers"),
-                StringUtil.parseLocString(c.getString("mainSpawn")), StringUtil.parseLocStringList(c.getStringList("spawnLocations")));
+        return new Arena(c.getName(), c.getString("signDisplayName"), c.getString("boardDisplayName"), c.getString("joinSound"), c.getInt("minPlayers"),
+                c.getInt("maxPlayers"), StringUtil.parseLocString(c.getString("mainSpawn")), StringUtil.parseLocStringList(c.getStringList("spawnLocations")));
     }
 }

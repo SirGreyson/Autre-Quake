@@ -31,7 +31,7 @@ public class MatchBoard {
         if(mainObj != null) mainObj.unregister();
         mainObj = matchBoard.registerNewObjective("mainObj", "dummy");
         mainObj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        mainObj.setDisplayName(match.getActiveArena().getDisplayName(true));
+        mainObj.setDisplayName(match.getActiveArena().getBoardDisplayName(true));
     }
 
     public void addPlayer(Player player) {
@@ -42,6 +42,10 @@ public class MatchBoard {
 
     public void removePlayer(Player player) {
         matchBoard.resetScores(player.getName());
+    }
+
+    public int getPoints(Player player) {
+        return mainObj.getScore(player.getName()).getScore();
     }
 
     public int addPoint(Player player) {

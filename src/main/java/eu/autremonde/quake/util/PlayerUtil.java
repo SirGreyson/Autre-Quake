@@ -42,6 +42,7 @@ public class PlayerUtil {
         for(PotionEffect pe : player.getActivePotionEffects())
             player.removePotionEffect(pe.getType());
         player.setExp(0);
+        player.setLevel(0);
         player.setTotalExperience(0);
         if(doTeleport) player.teleport(Bukkit.getWorld(Settings.SPAWN_WORLD.asString()).getSpawnLocation());
         if(eraseBoard) player.setScoreboard(getPlayerBoard(player));

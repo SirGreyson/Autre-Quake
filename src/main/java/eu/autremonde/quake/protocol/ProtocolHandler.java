@@ -49,4 +49,16 @@ public class ProtocolHandler {
             e.printStackTrace();
         }
     }
+
+    public static void sendCustomSound(Player player, String soundName) {
+        PacketContainer packet = new PacketContainer(PacketType.Play.Server.NAMED_SOUND_EFFECT);
+        packet.getStrings().write(0, soundName);
+        try {
+            ProtocolLibrary.getProtocolManager().recieveClientPacket(player, packet);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
 }

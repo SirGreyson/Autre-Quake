@@ -11,8 +11,7 @@ import eu.autremonde.quake.util.Messaging;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ArenaHandler {
 
@@ -45,7 +44,9 @@ public class ArenaHandler {
     }
 
     public static Arena getOpenArena() {
-        for(Arena arena : loadedArenas.values())
+        List<Arena> randomArenas = new ArrayList<Arena>(loadedArenas.values());
+        Collections.shuffle(randomArenas);
+        for(Arena arena : randomArenas)
             if(arena.getActiveLobby() != null) continue;
             else return arena;
         return null;

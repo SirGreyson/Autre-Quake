@@ -9,6 +9,7 @@ import eu.autremonde.quake.arena.ArenaHandler;
 import eu.autremonde.quake.config.Lang;
 import eu.autremonde.quake.config.Settings;
 import eu.autremonde.quake.lobby.Lobby;
+import eu.autremonde.quake.protocol.ProtocolHandler;
 import eu.autremonde.quake.railgun.RailgunHandler;
 import eu.autremonde.quake.stats.StatHandler;
 import eu.autremonde.quake.util.Messaging;
@@ -93,6 +94,7 @@ public class Match {
         StatHandler.getStats(player).addKill();
         if(Lang.KillStreaks.hasMessage(getKillStreak(player))) Messaging.broadcast(this, Lang.KillStreaks.toString(player, getKillStreak(player)));
         if(Lang.KillStreaks.getCoins(getKillStreak(player)) != 0) StatHandler.giveCoins(player, Lang.KillStreaks.getCoins(getKillStreak(player)));
+        for(Player p : player.getWorld().getPlayers()) ProtocolHandler.sendCustomSound(p, "killstreaks." + getKillStreak(player));
         if(matchBoard.addPoint(player) >= Settings.POINTS_TO_WIN.asInt()) finishGame(false);
         else setCountdown(Settings.KILL_CHECK_COUNTDOWN.asInt());
     }
@@ -141,6 +143,7 @@ public class Match {
             player.teleport(activeArena.getNextSpawnLoc());
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true));
             RailgunHandler.getRailgun("DEFAULT").giveRailGun(player);
+            ProtocolHandler.sendCustomSound(player, activeArena.getJoinSound());
         }
     }
 
@@ -152,7 +155,8 @@ public class Match {
             Messaging.broadcastNoPrefix(this, Lang.Broadcasts.LOBBY_FINISHED, Lang.FormatType.PLAYER_LOBBY_EVENT.getVarMap(null, lobby));
             Messaging.broadcast(this, Lang.Broadcasts.LOBBY_ENDING.toString().replace("%time%", String.valueOf(Settings.END_GAME_COUNTDOWN.asInt())));
             if(!getWinner().equalsIgnoreCase("NONE")) {
-                StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addCoins(Settings.WINNER_COINS.asInt());
+                if(matchBoard.getPoints(PlayerUtil.getPlayer(getWinner())) >= 10)
+                    StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addCoins(Settings.WINNER_COINS.asInt());
                 StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addWin();
                 if(PlayerUtil.getPlayer(getWinner()) != null) Messaging.send(PlayerUtil.getPlayer(getWinner()), Lang.Messages.LOBBY_WON);
             }

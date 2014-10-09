@@ -67,7 +67,7 @@ public class CommandHandler {
     @CommandPermissions("autrequake.admin")
     public static void arenaCommand(CommandContext args, CommandSender sender) {}
 
-    @Command(aliases = {"lobby"}, desc = "Lobby management command")
+    @Command(aliases = {"lquake"}, desc = "Lobby management command")
     @NestedCommand(LobbyCommand.class)
     public static void lobbyCommand(CommandContext args, CommandSender sender) {}
 }

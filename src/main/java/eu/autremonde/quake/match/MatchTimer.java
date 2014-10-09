@@ -7,11 +7,11 @@
 package eu.autremonde.quake.match;
 
 import eu.autremonde.quake.AutreQuake;
+import eu.autremonde.quake.FireworkColor;
 import eu.autremonde.quake.config.Lang;
 import eu.autremonde.quake.config.Settings;
 import eu.autremonde.quake.util.Messaging;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.entity.Firework;
@@ -77,7 +77,7 @@ public class MatchTimer {
                     countdown -= 1;
                     Player winner = Bukkit.getPlayer(match.getWinner());
                     if(countdown <= 0) match.resetGame();
-                    else if(countdown % 5 == 0 && winner != null) launchFirework(winner.getLocation());
+                    else if(winner != null) launchFirework(winner.getLocation());
                 }
             }.runTaskTimer(plugin, 20, 20);
         }
@@ -109,9 +109,11 @@ public class MatchTimer {
     }
 
     private void launchFirework(Location loc) {
-        Firework firework = loc.getWorld().spawn(loc, Firework.class);
-        FireworkMeta meta = firework.getFireworkMeta();
-        meta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.BALL_LARGE).withColor(Color.GREEN).build());
-        firework.setFireworkMeta(meta);
+        for(int i = 0; i < 10; i++) {
+            Firework firework = loc.getWorld().spawn(loc, Firework.class);
+            FireworkMeta meta = firework.getFireworkMeta();
+            meta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.BALL_LARGE).withColor(FireworkColor.RANDOM.getColor()).build());
+            firework.setFireworkMeta(meta);
+        }
     }
 }

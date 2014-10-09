@@ -20,15 +20,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class RailgunHandler {
 
     private static YamlConfiguration gunConfig = Configuration.getConfig("railguns");
 
     private static Map<String, Railgun> loadedRailguns = new TreeMap<String, Railgun>(String.CASE_INSENSITIVE_ORDER);
+    private static Map<UUID, Long> respawnTimes = new HashMap<UUID, Long>();
 
     public static void loadRailguns() {
         for(String gunID : gunConfig.getKeys(false))
@@ -59,5 +58,13 @@ public class RailgunHandler {
         lobby.getMatch().resetKillStreak(killed);
         Messaging.broadcast(lobby, Lang.Broadcasts.PLAYER_KILLED.toString().replace("%player%", killed.getName()).replace("%killer%", killer.getName()));
         lobby.getMatch().addKill(killer);
+    }
+
+    public static boolean isSpawnProtected(Player player) {
+        return respawnTimes.containsKey(player.getUniqueId()) && System.currentTimeMillis() - respawnTimes.get(player.getUniqueId()) < 3000;
+    }
+
+    public static void setRespawnTime(Player player) {
+        respawnTimes.put(player.getUniqueId(), System.currentTimeMillis());
     }
 }

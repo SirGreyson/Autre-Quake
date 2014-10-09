@@ -9,6 +9,7 @@ package eu.autremonde.quake.railgun;
 import eu.autremonde.quake.AutreQuake;
 import eu.autremonde.quake.FireworkColor;
 import eu.autremonde.quake.config.Lang;
+import eu.autremonde.quake.lobby.LobbyHandler;
 import eu.autremonde.quake.stats.StatHandler;
 import eu.autremonde.quake.util.Messaging;
 import org.bukkit.*;
@@ -72,14 +73,15 @@ public class Railgun {
             Firework trail = block.getWorld().spawn(block.getLocation(), Firework.class);
             Player player = getNearestPlayer(trail);
             trail.remove();
-            if (player != null && !player.isDead() && player != shooter && !hitPlayers.contains(player.getUniqueId())) {
+            if (player != null && !player.isDead() && player != shooter && !hitPlayers.contains(player.getUniqueId()) && !RailgunHandler.isSpawnProtected(player)) {
                 hitPlayers.add(player.getUniqueId());
                 playSound(hitSound, player.getLocation());
                 doHit(player.getLocation());
                 RailgunHandler.handleHit(player, shooter);
             }
         }
-        if(Lang.FreeStyleKills.hasMessage(hitPlayers.size())) Messaging.send(shooter, Lang.FreeStyleKills.toString(shooter, hitPlayers.size()));
+        if(LobbyHandler.getLobbyFromPlayer(shooter) != null && Lang.FreeStyleKills.hasMessage(hitPlayers.size()))
+            Messaging.broadcast(LobbyHandler.getLobbyFromPlayer(shooter), Lang.FreeStyleKills.toString(shooter, hitPlayers.size()));
         if(hitPlayers.size() > 0) StatHandler.giveCoins(shooter, hitPlayers.size());
     }
 

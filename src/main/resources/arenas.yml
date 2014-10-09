@@ -3,9 +3,14 @@
 
 ## Individual ID of the Arena ## 
 arena1:
-  # Display name of the Arena #
+  # Display name of the Arena on Signs #
   # Use '&' + a color code to color and '_' for spacing #
-  displayName: '&cTest_Arena'
+  signDisplayName: '&cTest_Arena'
+  # Display name of the Arena on the game Board #
+  # Use '&' + a color code to color and '_' for spacing #
+  boardDisplayName: '&cTest_Arena'
+  # Sound to play when a game starts on this Arena #
+  joinSound: 'arenas.arena1'
   # Location of the main spawn point #
   mainSpawn: world,-121,78,227
   # Maximum amount of players this Arena can have at once #
