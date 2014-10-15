@@ -55,6 +55,7 @@ public class EventHandler implements Listener {
     public void onPlayerLeave(PlayerQuitEvent e) {
         Lobby lobby = LobbyHandler.getLobbyFromPlayer(e.getPlayer());
         if(lobby != null) lobby.removePlayer(e.getPlayer());
+        StatHandler.saveStats(e.getPlayer());
         e.setQuitMessage(null);
     }
 

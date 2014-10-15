@@ -29,6 +29,11 @@ public class StatHandler {
         else loadedStats.put(player.getUniqueId(), StatPack.deserialize(s));
     }
 
+    public static void saveStats(Player player) {
+        c.set(player.getUniqueId().toString(), loadedStats.get(player.getUniqueId()).serialize());
+        loadedStats.remove(player.getUniqueId());
+    }
+
     public static void saveStats() {
         for(UUID uuid : loadedStats.keySet())
             c.set(uuid.toString(), loadedStats.get(uuid).serialize());
