@@ -45,10 +45,15 @@ public class EventHandler implements Listener {
     }
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(PlayerJoinEvent e) {
+    public void onPlayerJoin(final PlayerJoinEvent e) {
         e.setJoinMessage(null);
         StatHandler.loadStats(e.getPlayer());
-        PlayerUtil.resetPlayer(e.getPlayer(), true, true);
+        plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                PlayerUtil.resetPlayer(e.getPlayer(), true, true);
+            }
+        });
     }
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)

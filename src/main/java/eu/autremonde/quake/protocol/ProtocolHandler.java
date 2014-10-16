@@ -51,7 +51,7 @@ public class ProtocolHandler {
     }
 
     public static void sendCustomSound(Player player, String soundName) {
-        PacketContainer packet = new PacketContainer(PacketType.Play.Server.NAMED_SOUND_EFFECT);
+        /*PacketContainer packet = new PacketContainer(PacketType.Play.Server.NAMED_SOUND_EFFECT);
         packet.getStrings().write(0, soundName);
         try {
             ProtocolLibrary.getProtocolManager().recieveClientPacket(player, packet);
@@ -59,6 +59,7 @@ public class ProtocolHandler {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-        }
+        }*/
+        player.playSound(player.getLocation(), soundName, 1, 1);
     }
 }
