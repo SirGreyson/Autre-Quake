@@ -48,12 +48,14 @@ public class EventHandler implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent e) {
         e.setJoinMessage(null);
         StatHandler.loadStats(e.getPlayer());
-        plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+        PlayerUtil.resetPlayer(e.getPlayer(), true, true);
+        plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
             public void run() {
-                PlayerUtil.resetPlayer(e.getPlayer(), true, true);
+                if (!PlayerUtil.updatePlayerBoard(e.getPlayer()))
+                    Messaging.printErr("Error updating Scoreboard for Player " + e.getPlayer().getName());
             }
-        });
+        }, 40);
     }
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)

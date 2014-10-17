@@ -62,4 +62,15 @@ public class PlayerUtil {
         obj.getScore(ChatColor.GREEN + "Wins:").setScore(StatHandler.getStats(player).getWinCount());
         return board;
     }
+
+    public static boolean updatePlayerBoard(Player player) {
+        Scoreboard scoreboard = player.getScoreboard();
+        if (scoreboard.getObjective("main") == null || !scoreboard.getObjective("main").getDisplayName().equalsIgnoreCase(StringUtil.colorize("&c&lStatistiques")))
+            return false;
+        Objective obj = scoreboard.getObjective("main");
+        obj.getScore(ChatColor.GOLD + "Pièces:").setScore(StatHandler.getStats(player).getCoinCount());
+        obj.getScore(ChatColor.AQUA + "Kills:").setScore(StatHandler.getStats(player).getKillCount());
+        obj.getScore(ChatColor.GREEN + "Wins:").setScore(StatHandler.getStats(player).getWinCount());
+        return true;
+    }
 }
