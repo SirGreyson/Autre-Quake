@@ -13,7 +13,6 @@ import eu.autremonde.quake.lobby.LobbyHandler;
 import eu.autremonde.quake.match.Stage;
 import eu.autremonde.quake.protocol.ProtocolHandler;
 import eu.autremonde.quake.railgun.RailgunHandler;
-import eu.autremonde.quake.stats.StatHandler;
 import eu.autremonde.quake.util.Messaging;
 import eu.autremonde.quake.util.PlayerUtil;
 import org.bukkit.Bukkit;
@@ -30,6 +29,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class EventHandler implements Listener {
 
@@ -45,24 +45,26 @@ public class EventHandler implements Listener {
     }
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(final PlayerJoinEvent e) {
+    public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(null);
-        StatHandler.loadStats(e.getPlayer());
         PlayerUtil.resetPlayer(e.getPlayer(), true, true);
-        plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+    }
+
+    @org.bukkit.event.EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerJoinMonitor(final PlayerJoinEvent e) {
+        new BukkitRunnable() {
             @Override
             public void run() {
-                if (!PlayerUtil.updatePlayerBoard(e.getPlayer()))
-                    Messaging.printErr("Error updating Scoreboard for Player " + e.getPlayer().getName());
+                if (e.getPlayer() != null && e.getPlayer().isOnline())
+                    PlayerUtil.updatePlayerBoard(e.getPlayer());
             }
-        }, 40);
+        }.runTaskLater(plugin, 60);
     }
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)
     public void onPlayerLeave(PlayerQuitEvent e) {
         Lobby lobby = LobbyHandler.getLobbyFromPlayer(e.getPlayer());
         if(lobby != null) lobby.removePlayer(e.getPlayer());
-        StatHandler.saveStats(e.getPlayer());
         e.setQuitMessage(null);
     }
 
@@ -116,7 +118,7 @@ public class EventHandler implements Listener {
             Lobby lobby = LobbyHandler.getLobbyFromSign(e.getClickedBlock().getLocation());
             if(lobby != null && lobby.canAddPlayer(e.getPlayer())) lobby.addPlayer(e.getPlayer());
 
-        } else if(e.getAction() == Action.RIGHT_CLICK_AIR && e.getItem() != null)
+        } else if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && e.getItem() != null)
             if(RailgunHandler.getRailgun("DEFAULT").isSimilar(e.getItem()) && e.getPlayer().getTotalExperience() <= 0)
                 RailgunHandler.getRailgun("DEFAULT").shoot(e.getPlayer()); //TODO This is not dynamic
     }

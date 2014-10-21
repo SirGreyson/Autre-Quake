@@ -50,7 +50,7 @@ public class MatchBoard {
 
     public int addPoint(Player player) {
         Score score = mainObj.getScore(player.getName());
-        score.setScore(score.getScore() + 1);
+        score.setScore(score.getScore() + 1 > 25 ? 25 : score.getScore() + 1);
         if(Lang.KillCounts.hasMessage(score.getScore())) Messaging.broadcast(match, Lang.KillCounts.toString(player, score.getScore()));
         return score.getScore();
     }

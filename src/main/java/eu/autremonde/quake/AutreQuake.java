@@ -26,6 +26,7 @@ public class AutreQuake extends JavaPlugin {
 
     public void onEnable() {
         getConfiguration().loadConfigurations();
+        StatHandler.loadStats();
         ArenaHandler.loadArenas();
         LobbyHandler.loadLobbies();
         RailgunHandler.loadRailguns();

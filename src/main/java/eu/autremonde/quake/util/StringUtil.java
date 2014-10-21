@@ -29,17 +29,22 @@ public class StringUtil {
         return Integer.parseInt(intString);
     }
 
+    public static double asDouble(String doubleString) {
+        return Double.parseDouble(doubleString);
+    }
+
     public static String formatTime(int time) {
         return String.valueOf(time / 60 + ":") + (String.valueOf(time % 60).length() == 1 ? "0" + String.valueOf(time % 60) : String.valueOf(time % 60));
     }
 
     public static String parseLoc(Location loc) {
-        return loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
+        return loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ() + "," + loc.getYaw() + "," + loc.getPitch();
     }
 
     public static Location parseLocString(String locString) {
         String coords[] = locString.split(",");
-        return new Location(Bukkit.getWorld(coords[0]), asInt(coords[1]), asInt(coords[2]), asInt(coords[3]));
+        return new Location(Bukkit.getWorld(coords[0]), asDouble(coords[1]), asDouble(coords[2]), asDouble(coords[3]),
+                coords.length > 4 ? Float.valueOf(coords[4]) : 0, coords.length > 5 ? Float.valueOf(coords[5]) : 0);
     }
 
     public static List<String> parseLocList(List<Location> locList) {

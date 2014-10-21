@@ -9,6 +9,7 @@ package eu.autremonde.quake.util;
 import eu.autremonde.quake.config.Settings;
 import eu.autremonde.quake.protocol.ProtocolHandler;
 import eu.autremonde.quake.stats.StatHandler;
+import eu.autremonde.quake.stats.StatPack;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -68,9 +69,11 @@ public class PlayerUtil {
         if (scoreboard.getObjective("main") == null || !scoreboard.getObjective("main").getDisplayName().equalsIgnoreCase(StringUtil.colorize("&c&lStatistiques")))
             return false;
         Objective obj = scoreboard.getObjective("main");
-        obj.getScore(ChatColor.GOLD + "Pièces:").setScore(StatHandler.getStats(player).getCoinCount());
-        obj.getScore(ChatColor.AQUA + "Kills:").setScore(StatHandler.getStats(player).getKillCount());
-        obj.getScore(ChatColor.GREEN + "Wins:").setScore(StatHandler.getStats(player).getWinCount());
+        StatPack stats = StatHandler.getStats(player);
+        obj.getScore(ChatColor.GOLD + "Pièces:").setScore(stats.getCoinCount());
+        obj.getScore(ChatColor.AQUA + "Kills:").setScore(stats.getKillCount());
+        obj.getScore(ChatColor.GREEN + "Wins:").setScore(stats.getWinCount());
+        System.out.println("Loaded Stats{player=" + player.getName() + ",coins=" + stats.getCoinCount() + ",kills=" + stats.getKillCount() + ",wins=" + stats.getWinCount() + "}");
         return true;
     }
 }

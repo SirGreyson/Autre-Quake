@@ -149,7 +149,7 @@ public class Lang {
         }
 
         public static int getCoins(int kills) {
-            return kills + (kills - 1);
+            return kills + kills;
         }
     }
 
