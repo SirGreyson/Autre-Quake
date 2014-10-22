@@ -112,7 +112,13 @@ public class MatchTimer {
         for(int i = 0; i < 10; i++) {
             Firework firework = loc.getWorld().spawn(loc, Firework.class);
             FireworkMeta meta = firework.getFireworkMeta();
-            meta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.BALL_LARGE).withColor(FireworkColor.RANDOM.getColor()).build());
+            FireworkEffect.Builder builder = FireworkEffect.builder().
+                    with(FireworkEffect.Type.valueOf(Settings.FIREWORK_TYPE.asString())).
+                    trail(Settings.SHOW_TRAIL.asBoolean()).
+                    flicker(Settings.SHOW_FLICKER.asBoolean());
+            for (String color : Settings.FIREWORK_COLORS.asStringList())
+                builder.withColor(FireworkColor.valueOf(color).getColor());
+            meta.addEffect(builder.build());
             firework.setFireworkMeta(meta);
         }
     }

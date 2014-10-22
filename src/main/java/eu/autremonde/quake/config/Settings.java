@@ -6,6 +6,8 @@ package eu.autremonde.quake.config;/*
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.util.List;
+
 public enum Settings {
 
     SPAWN_WORLD,
@@ -19,9 +21,18 @@ public enum Settings {
     FORCE_RESPAWN_DELAY,
 
     DEFAULT_MIN_PLAYERS,
-    DEFAULT_MAX_PLAYERS;
+    DEFAULT_MAX_PLAYERS,
+
+    FIREWORK_TYPE,
+    SHOW_TRAIL,
+    SHOW_FLICKER,
+    FIREWORK_COLORS;
 
     private static YamlConfiguration c = Configuration.getConfig("config");
+
+    public boolean asBoolean() {
+        return c.getBoolean(this.name());
+    }
 
     public String asString() {
         return c.getString(this.name());
@@ -29,6 +40,10 @@ public enum Settings {
 
     public int asInt() {
         return c.getInt(this.name());
+    }
+
+    public List<String> asStringList() {
+        return c.getStringList(this.name());
     }
 
 }

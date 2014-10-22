@@ -32,3 +32,19 @@ FORCE_RESPAWN_DELAY: 3
 DEFAULT_MIN_PLAYERS: 5
 ## Default MAX player count for an Arena ## 
 DEFAULT_MAX_PLAYERS: 10
+
+### End-Game Firework Configuration ###
+
+## The shape of the Firework effect ## 
+## http://jd.bukkit.org/rb/doxygen/d0/d54/enumorg_1_1bukkit_1_1FireworkEffect_1_1Type.html ##
+FIREWORK_TYPE: CREEPER
+## Should the Firework show a Trail? ##
+SHOW_TRAIL: false
+## Should the Firework show a Flicker? ##
+SHOW_FLICKER: false
+## List of colors for the Firework effect ##
+## http://jd.bukkit.org/rb/doxygen/d8/d67/classorg_1_1bukkit_1_1Color.html#ab59e385449a16a5487f66fac8f6d8106 ##
+FIREWORK_COLORS:
+- BLACK
+- ORANGE
+
