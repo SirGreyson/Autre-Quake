@@ -58,7 +58,7 @@ public class Railgun {
     private Firework createFirework(Location loc) {
         Firework firework = loc.getWorld().spawn(loc, Firework.class);
         FireworkMeta meta = firework.getFireworkMeta();
-        meta.addEffect(FireworkEffect.builder().with(fireworkType).withColor(fireworkColor.getColor()).build());
+        meta.addEffect(FireworkEffect.builder().with(fireworkType).withColor(FireworkColor.RANDOM.getColor()).build());
         firework.setFireworkMeta(meta);
         return firework;
     }
@@ -69,15 +69,16 @@ public class Railgun {
         List<UUID> hitPlayers = new ArrayList<UUID>();
         List<Block> lineOfSight = shooter.getLineOfSight(null, 50);
         for (Block block : lineOfSight) {
-            if(block.getType() != Material.AIR) break;
+            if (block.getType() != Material.AIR && block.getType().isSolid()) break;
             Firework trail = block.getWorld().spawn(block.getLocation(), Firework.class);
             Player player = getNearestPlayer(trail);
             trail.remove();
             if (player != null && !player.isDead() && player != shooter && !hitPlayers.contains(player.getUniqueId()) && !RailgunHandler.isSpawnProtected(player)) {
-                hitPlayers.add(player.getUniqueId());
-                playSound(hitSound, player.getLocation());
-                doHit(player.getLocation());
-                RailgunHandler.handleHit(player, shooter);
+                if (RailgunHandler.handleHit(player, shooter)) {
+                    hitPlayers.add(player.getUniqueId());
+                    playSound(hitSound, player.getLocation());
+                    doHit(player.getLocation());
+                }
             }
         }
         if(LobbyHandler.getLobbyFromPlayer(shooter) != null && Lang.FreeStyleKills.hasMessage(hitPlayers.size()))

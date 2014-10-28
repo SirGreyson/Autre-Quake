@@ -118,9 +118,10 @@ public class EventHandler implements Listener {
             Lobby lobby = LobbyHandler.getLobbyFromSign(e.getClickedBlock().getLocation());
             if(lobby != null && lobby.canAddPlayer(e.getPlayer())) lobby.addPlayer(e.getPlayer());
 
-        } else if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && e.getItem() != null)
+        } else if ((e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR) && e.getItem() != null) {
             if(RailgunHandler.getRailgun("DEFAULT").isSimilar(e.getItem()) && e.getPlayer().getTotalExperience() <= 0)
                 RailgunHandler.getRailgun("DEFAULT").shoot(e.getPlayer()); //TODO This is not dynamic
+        }
     }
 
     @org.bukkit.event.EventHandler (priority = EventPriority.HIGHEST)

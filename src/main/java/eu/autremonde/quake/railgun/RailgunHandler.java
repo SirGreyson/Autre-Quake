@@ -49,15 +49,16 @@ public class RailgunHandler {
         return itemStack;
     }
 
-    public static void handleHit(Player killed, Player killer) {
+    public static boolean handleHit(Player killed, Player killer) {
         Lobby lobby = LobbyHandler.getLobbyFromPlayer(killed);
-        if(lobby == null || lobby.getStage() != Stage.RUNNING) return;
+        if (lobby == null || lobby.getStage() != Stage.RUNNING) return false;
         killed.setHealth(0);
         if(lobby.getMatch().getKillStreak(killed) >= 5)
             Messaging.broadcast(lobby, Lang.Broadcasts.PLAYER_SHOTDOWN.toString().replace("%player%", killed.getName()).replace("%killer%", killer.getName()));
         lobby.getMatch().resetKillStreak(killed);
         Messaging.broadcast(lobby, Lang.Broadcasts.PLAYER_KILLED.toString().replace("%player%", killed.getName()).replace("%killer%", killer.getName()));
         lobby.getMatch().addKill(killer);
+        return true;
     }
 
     public static boolean isSpawnProtected(Player player) {
