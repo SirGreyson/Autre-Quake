@@ -8,6 +8,8 @@ package eu.autremonde.quake;
 
 import org.bukkit.Color;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public enum FireworkColor {
@@ -42,5 +44,23 @@ public enum FireworkColor {
     public Color getColor() {
         if(this != RANDOM) return this.color;
         return values()[random.nextInt(values().length)].getColor();
+    }
+
+    public static List<Color> getColors(List<String> input) {
+        List<Color> output = new ArrayList<Color>();
+        for (String i : input) {
+            if (valueOf(i) == null) continue;
+            output.add(valueOf(i).getColor());
+        }
+        return output;
+    }
+
+    public static List<FireworkColor> parseList(List<String> input) {
+        List<FireworkColor> output = new ArrayList<FireworkColor>();
+        for (String i : input) {
+            if (valueOf(i) == null) continue;
+            output.add(valueOf(i));
+        }
+        return output;
     }
 }

@@ -29,17 +29,24 @@ public class Railgun {
     private ItemStack gunStack;
     private String shotSound;
     private String hitSound;
-    private FireworkColor fireworkColor;
     private FireworkEffect.Type fireworkType;
+    private List<Color> fireworkColor;
+
+    private HashSet<Byte> transparent = new HashSet<Byte>();
 
     private Map<UUID, BukkitTask> taskMap = new HashMap<UUID, BukkitTask>();
 
-    public Railgun(Material gunType, String displayName, List<String> lore, String ench, String shotSound, String hitSound, FireworkColor fireworkColor, FireworkEffect.Type fireworkType) {
+    public Railgun(Material gunType, String displayName, List<String> lore, String ench, String shotSound, String hitSound, FireworkEffect.Type fireworkType, List<Color> fireworkColor) {
         this.gunStack = RailgunHandler.metaStack(gunType, displayName, lore, ench);
         this.shotSound = shotSound;
         this.hitSound = hitSound;
-        this.fireworkColor = fireworkColor;
         this.fireworkType = fireworkType;
+        this.fireworkColor = fireworkColor;
+        for (Material material : Material.values()) {
+            if (material.isTransparent()) {
+                transparent.add((byte) material.getId());
+            }
+        }
     }
 
     public boolean isSimilar(ItemStack itemStack) {
@@ -58,7 +65,7 @@ public class Railgun {
     private Firework createFirework(Location loc) {
         Firework firework = loc.getWorld().spawn(loc, Firework.class);
         FireworkMeta meta = firework.getFireworkMeta();
-        meta.addEffect(FireworkEffect.builder().with(fireworkType).withColor(FireworkColor.RANDOM.getColor()).build());
+        meta.addEffect(FireworkEffect.builder().with(fireworkType).withColor(fireworkColor).build());
         firework.setFireworkMeta(meta);
         return firework;
     }
@@ -67,7 +74,7 @@ public class Railgun {
         doCooldown(shooter);
         playSound(shotSound, shooter.getLocation());
         List<UUID> hitPlayers = new ArrayList<UUID>();
-        List<Block> lineOfSight = shooter.getLineOfSight(null, 50);
+        List<Block> lineOfSight = shooter.getLineOfSight(transparent, 50);
         for (Block block : lineOfSight) {
             if (block.getType() != Material.AIR && block.getType().isSolid()) break;
             Firework trail = block.getWorld().spawn(block.getLocation(), Firework.class);
@@ -83,7 +90,7 @@ public class Railgun {
         }
         if(LobbyHandler.getLobbyFromPlayer(shooter) != null && Lang.FreeStyleKills.hasMessage(hitPlayers.size()))
             Messaging.broadcast(LobbyHandler.getLobbyFromPlayer(shooter), Lang.FreeStyleKills.toString(shooter, hitPlayers.size()));
-        if(hitPlayers.size() > 0) StatHandler.giveCoins(shooter, hitPlayers.size());
+        if (hitPlayers.size() > 0) StatHandler.giveCoins(shooter, hitPlayers.size() + 1);
     }
 
     private Player getNearestPlayer(Firework firework) {
@@ -117,6 +124,6 @@ public class Railgun {
 
     public static Railgun deserialize(ConfigurationSection c) {
         return new Railgun(Material.valueOf(c.getString("MATERIAL")), c.getString("DISPLAY_NAME"), c.getStringList("ITEM_LORE"), c.getString("ENCHANTMENT"),
-                c.getString("SHOT_SOUND"), c.getString("HIT_SOUND"), FireworkColor.valueOf(c.getString("FIREWORK_COLOR")), FireworkEffect.Type.valueOf(c.getString("FIREWORK_TYPE")));
+                c.getString("SHOT_SOUND"), c.getString("HIT_SOUND"), FireworkEffect.Type.valueOf(c.getString("FIREWORK_TYPE")), FireworkColor.getColors(c.getStringList("FIREWORK_COLOR")));
     }
 }

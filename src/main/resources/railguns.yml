@@ -26,9 +26,10 @@ default:
   ## Sound Syntax: 'SOUND:VOLUME:PITCH' or 'none' for no custom sound ##
   ## Click for a full list of available Sounds (http://jd.bukkit.org/rb/apidocs/org/bukkit/World.html) ##
   HIT_SOUND: 'BLAZE_DEATH:1:2'
-  ## Color of the Firework that explodes when a player or block is hit (or use RANDOM for a randomized color) ##
-  ## Click for a full list of available Colors (http://jd.bukkit.org/rb/apidocs/org/bukkit/Color.html) ##
-  FIREWORK_COLOR: 'RANDOM'
   ## Type of the Firework that explodes when a player or block is hit ##
   ## Click for a full list of available Types (http://jd.bukkit.org/rb/apidocs/org/bukkit/FireworkEffect.Type.html) ##
   FIREWORK_TYPE: 'BALL_LARGE'
+  ## Colors of the Firework that explodes when a player or block is hit (or use RANDOM for a randomized color) ##
+  ## Click for a full list of available Colors (http://jd.bukkit.org/rb/apidocs/org/bukkit/Color.html) ##
+  FIREWORK_COLOR: 
+  - RANDOM

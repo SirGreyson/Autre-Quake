@@ -155,10 +155,12 @@ public class Match {
             Messaging.broadcastNoPrefix(this, Lang.Broadcasts.LOBBY_FINISHED, Lang.FormatType.PLAYER_LOBBY_EVENT.getVarMap(null, lobby));
             Messaging.broadcast(this, Lang.Broadcasts.LOBBY_ENDING.toString().replace("%time%", String.valueOf(Settings.END_GAME_COUNTDOWN.asInt())));
             if(!getWinner().equalsIgnoreCase("NONE")) {
-                if(matchBoard.getPoints(PlayerUtil.getPlayer(getWinner())) >= 10)
+                if (matchBoard.getPoints(PlayerUtil.getPlayer(getWinner())) >= 10) {
                     StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addCoins(Settings.WINNER_COINS.asInt());
-                StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addWin();
-                if(PlayerUtil.getPlayer(getWinner()) != null) Messaging.send(PlayerUtil.getPlayer(getWinner()), Lang.Messages.LOBBY_WON);
+                    StatHandler.getStats(PlayerUtil.getPlayer(getWinner())).addWin();
+                    if (PlayerUtil.getPlayer(getWinner()) != null)
+                        Messaging.send(PlayerUtil.getPlayer(getWinner()), Lang.Messages.LOBBY_WON);
+                }
             }
         }
     }

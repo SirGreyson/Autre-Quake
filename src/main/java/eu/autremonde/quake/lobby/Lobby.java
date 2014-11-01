@@ -118,7 +118,8 @@ public class Lobby {
     }
 
     public void removePlayer(Player player) {
-        Messaging.broadcast(this, Lang.Broadcasts.PLAYER_LEFT_LOBBY, Lang.FormatType.PLAYER_LOBBY_EVENT.getVarMap(player, this));
+        if (getStage() != Stage.ENDING)
+            Messaging.broadcast(this, Lang.Broadcasts.PLAYER_LEFT_LOBBY, Lang.FormatType.PLAYER_LOBBY_EVENT.getVarMap(player, this));
         lobbyMatch.removePlayer(player);
         updateLobbySigns();
         if(!player.isOnline()) return;
